@@ -1,10 +1,11 @@
-package com.rfstudio.timeapp.autopalnWork.activity;
+package com.rfstudio.timeapp.autopalnWork.view;
 
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import com.rfstudio.timeapp.R;
+import com.rfstudio.timeapp.application.MyApplication;
 import com.rfstudio.timeapp.databinding.ActivityAddplanAutoBinding;
 
 /**
@@ -15,7 +16,9 @@ public class AutoPlanActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_addplan_auto);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_addplan_auto);
         binding.executePendingBindings();
+
     }
 }

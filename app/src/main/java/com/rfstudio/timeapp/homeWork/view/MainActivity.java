@@ -1,42 +1,35 @@
 package com.rfstudio.timeapp.homeWork.view;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.github.clans.fab.FloatingActionMenu;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import android.view.View;
 
-import androidx.databinding.DataBindingUtil;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.material.navigation.NavigationView;
 import com.rfstudio.timeapp.R;
-import com.rfstudio.timeapp.databinding.ActivityMainBinding;
-import com.rfstudio.timeapp.homeWork.viewmodel.HomeWorkViewModel;
-
-import androidx.drawerlayout.widget.DrawerLayout;
+import com.rfstudio.timeapp.autopalnWork.view.AutoPlanActivity;
+import com.rfstudio.timeapp.customplanWork.view.CustomPlanActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
-        HomeWorkViewModel homeWorkViewModel = new HomeWorkViewModel(this,binding,mAppBarConfiguration);
+        setContentView(R.layout.activity_main);
 
-        /*
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
          */
-        /*
-        FloatingActionMenu fabmenu = findViewById(R.id.fab_menu);
+        listenFab();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -67,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-         */
-
     }
 
     /*
@@ -81,7 +71,30 @@ public class MainActivity extends AppCompatActivity {
 
      */
 
+    /**
+     * 监听悬浮按钮事件
+     * @return
+     */
+    private void listenFab(){
+        FloatingActionButton fab1 = findViewById(R.id.fab_1);
+        FloatingActionButton fab2 = findViewById(R.id.fab_2);
 
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AutoPlanActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CustomPlanActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
