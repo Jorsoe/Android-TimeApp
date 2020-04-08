@@ -1,10 +1,13 @@
 package com.rfstudio.timeapp.work.autopalnWork.view;
 
 import android.os.Bundle;
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import com.rfstudio.timeapp.R;
+import com.rfstudio.timeapp.application.MyApplication;
 import com.rfstudio.timeapp.databinding.ActivityAddplanAutoBinding;
 
 /**
