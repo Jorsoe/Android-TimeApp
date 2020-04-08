@@ -41,6 +41,10 @@ Software architecture description
 + 5.this：表示当前对象；当它表示MainActivity时，也可以用来提供Activity Context，原因同上。
 + 6.getContext()：这个是View类中提供的方法，在继承了View的类中才可以调用，返回的是当前View运行在哪个Activity Context中。前面的3个方法可以在Activity中调用。
 + 对于没有代码描述的情况， 可以在AS的设置中 勾选 show quick doc on mouse move 以及 show the documentation popup in,(用搜索框能快速找到此选项)
++ 对于 push 提示警告 可在 Terminal 使用
+```doc
+git pull origin master --allow-unrelated-histories
+```
 
 
 #### Installation

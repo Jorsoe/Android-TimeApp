@@ -5,9 +5,10 @@ import android.graphics.Color;
 import com.rfstudio.timeapp.utils.TimeStruct;
 
 public class PlanModel {
-    private String occupation;
-    private TimeStruct startTime;
-    private TimeStruct endTime;
+    private int id;
+    private String doThing;
+    private TimeStruct during;
+
     //
     public Color color;
     public boolean isBellAlert;         // 响铃是否开启
@@ -22,27 +23,28 @@ public class PlanModel {
         this.isExecuted = true;
     }
 
-    public String getOccupation() {
-        return occupation;
+    public int getId() {
+        return id;
     }
 
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public TimeStruct getStartTime() {
-        return startTime;
+
+    public TimeStruct getDuring() {
+        return during;
     }
 
-    public void setStartTime(TimeStruct startTime) {
-        this.startTime = startTime;
+    public void setDuring(TimeStruct during) {
+        this.during = during;
     }
 
-    public TimeStruct getEndTime() {
-        return endTime;
+    public String getDoThing() {
+        return doThing;
     }
 
-    public void setEndTime(TimeStruct endTime) {
-        this.endTime = endTime;
+    public void setDoThing(String doThing) {
+        this.doThing = doThing;
     }
 }
