@@ -1,4 +1,4 @@
-package com.rfstudio.timeapp.customplanWork.view;
+package com.rfstudio.timeapp.work.customplanWork.view;
 
 import android.os.Bundle;
 

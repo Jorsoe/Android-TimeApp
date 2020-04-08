@@ -1,4 +1,4 @@
-package com.rfstudio.timeapp.homeWork.view;
+package com.rfstudio.timeapp.work.homeWork.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,11 +12,10 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.material.navigation.NavigationView;
 import com.rfstudio.timeapp.R;
-import com.rfstudio.timeapp.autopalnWork.view.AutoPlanActivity;
-import com.rfstudio.timeapp.customplanWork.view.CustomPlanActivity;
+import com.rfstudio.timeapp.work.autopalnWork.view.AutoPlanActivity;
+import com.rfstudio.timeapp.work.customplanWork.view.CustomPlanActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

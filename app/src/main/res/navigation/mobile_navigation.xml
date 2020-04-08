@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.rfstudio.timeapp.ui.home.HomeFragment"
+        android:name="com.rfstudio.timeapp.work.homeWork.view.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
     <!--

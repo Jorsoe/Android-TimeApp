@@ -1,4 +1,4 @@
-package com.rfstudio.timeapp.ui.home;
+package com.rfstudio.timeapp.work.homeWork.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.rfstudio.timeapp.R;
+import com.rfstudio.timeapp.work.homeWork.viewmodel.HomeViewModel;
 
 public class HomeFragment extends Fragment {
 

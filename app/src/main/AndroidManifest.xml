@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".homeWork.view.MainActivity"
+            android:name=".work.homeWork.view.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,8 +21,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".customplanWork.view.CustomPlanActivity"/>
-        <activity android:name=".autopalnWork.view.AutoPlanActivity"/>
+        <activity android:name=".work.customplanWork.view.CustomPlanActivity"/>
+        <activity android:name=".work.autopalnWork.view.AutoPlanActivity"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.rfstudio.timeapp.ui.home;
+package com.rfstudio.timeapp.work.homeWork.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
