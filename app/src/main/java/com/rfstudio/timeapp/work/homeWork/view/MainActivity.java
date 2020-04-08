@@ -2,6 +2,7 @@ package com.rfstudio.timeapp.work.homeWork.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
@@ -14,6 +15,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.rfstudio.timeapp.R;
+import com.rfstudio.timeapp.application.MyApplication;
+import com.rfstudio.timeapp.utils.FileManager;
 import com.rfstudio.timeapp.work.autopalnWork.view.AutoPlanActivity;
 import com.rfstudio.timeapp.work.customplanWork.view.CustomPlanActivity;
 
@@ -22,27 +25,17 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    MyApplication application;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-         */
         listenFab();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -57,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        FileManager fileManager = new FileManager(getApplicationContext());
 
     }
 

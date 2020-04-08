@@ -26,7 +26,20 @@ Software architecture description
 ```
 + 对于需要使用 apllication 共享数据时，自行到 application/ 的相关类中增添属性
 + 业务结构并不绝对，有些并不需要 model
-
++ 使用自定义的application 的方法为
+```java
+    MyApplication application ; // 可为局部变量，也可为全局成员变量
+    application = (MyApplication)getApplication();          // 这样获取到了对应的application
+    // 使用get/set 方法 来存取数据
+    application.getxxx();
+```
++ 1.getApplication()：虽然它返回的是Application对象，但Application类继承自Context，所以它可以用来提供Application Context；
+  2.getApplicationContext()：返回Application Context；
+  3.getBaseContext()：返回Activity Context；
+  4.MainActivity.this：表示MainActivity对象，一般用在内部类中指示外面的this，如果在内部类直接用this，指示的是内部类本身。因为MainActivity继承Activity，而Activity继承Context，所以它也可以用来提供Activity Contex；
+  5.this：表示当前对象；当它表示MainActivity时，也可以用来提供Activity Context，原因同上。
+  6.getContext()：这个是View类中提供的方法，在继承了View的类中才可以调用，返回的是当前View运行在哪个Activity Context中。前面的3个方法可以在Activity中调用。
++ 对于没有代码描述的情况， 可以在AS的设置中 勾选 show quick doc on mouse move 以及 show the documentation popup in,(用搜索框能快速找到此选项)
 #### Installation
 
 1.  xxxx
