@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -18,6 +19,7 @@ import com.rfstudio.timeapp.R;
 import com.rfstudio.timeapp.application.MyApplication;
 import com.rfstudio.timeapp.utils.FileManager;
 import com.rfstudio.timeapp.utils.TimeStruct;
+import com.rfstudio.timeapp.utilsModel.ConfigInfoModel;
 import com.rfstudio.timeapp.utilsModel.PlanModel;
 import com.rfstudio.timeapp.work.autopalnWork.view.AutoPlanActivity;
 import com.rfstudio.timeapp.work.customplanWork.view.CustomPlanActivity;
@@ -66,12 +68,14 @@ public class MainActivity extends AppCompatActivity {
             planList.add(planItem);
         }
 
-        FileManager fileManager = new FileManager(getApplicationContext());
-        fileManager.addPlanListInXmlFile(planList,FileManager.savefileName);
+        // 写入list到文件
+        //FileManager.addPlanListInXmlFile(planList,FileManager.savefileName,getApplicationContext());
+        // 构建Config
+        ConfigInfoModel configInfoModel = FileManager.buildConfigInfoModel(FileManager.configfileName,getApplicationContext());
 
-        ArrayList<PlanModel> planLists = fileManager.getPlanlistInXmlFile(FileManager.savefileName);
-        fileManager.addPlanListInXmlFile(planLists,FileManager.configfileName);
-        
+        Toast.makeText(getApplicationContext(),"新用户："+configInfoModel.isNewAccount ,Toast.LENGTH_LONG).show();
+
+
 
 
     }
