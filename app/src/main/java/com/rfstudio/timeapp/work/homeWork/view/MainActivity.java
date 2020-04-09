@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<PlanModel> planLists = fileManager.getPlanlistInXmlFile(FileManager.savefileName);
         fileManager.addPlanListInXmlFile(planLists,FileManager.configfileName);
+        
 
 
     }

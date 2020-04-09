@@ -177,58 +177,44 @@ public class FileManager {
             parser.setInput(fis,"utf-8");
             // 获取事件类型
             int eventType = parser.getEventType();
+
+            PlanModel planItem = null;
+            String st = null;
+            String et = null;
+            TimeStruct ts = null;
+
             // 开始获取
             while (eventType != XmlPullParser.END_DOCUMENT){ // 如果当前没有到文档底部
                 // 获取当前节点名
                 String tagName = parser.getName();
-                String st = null;
-                String et = null;
-                PlanModel planItem = null;
                 switch (eventType){
+                    case XmlPullParser.START_DOCUMENT:  // 头部
+                        break;
                     case XmlPullParser.START_TAG : // 开始节点
                         // 匹配赋值
-                        switch (tagName){
-                            case "PlanList":
-                                break;
-                            case "PlanItem":
-                                planItem = new PlanModel();
-                                planItem.setId(Integer.parseInt(parser.getAttributeValue(null,"id")));
-                                break;
-                            case "dothing":
-                                parser.nextText();
-                                planItem.setDoThing(parser.nextText());
-                                break;
-                            case "startTime":
-                                parser.nextText();
-                                st = parser.nextText();
-                                break;
-                            case "endTime":
-                                parser.nextText();
-                                et = parser.nextText();
-                                break;
-                            case "isBellAlert":
-                                parser.nextText();
-                                planItem.isBellAlert = Boolean.parseBoolean(parser.nextText());
-                                break;
-                            case "isShock":
-                                parser.nextText();
-                                planItem.isShock = Boolean.parseBoolean(parser.nextText());
-                                break;
-                            case "isOpen":
-                                parser.nextText();
-                                planItem.isOpen = Boolean.parseBoolean(parser.nextText());
-                                break;
-                            case "isExecuted":
-                                parser.nextText();
-                                planItem.isExecuted = Boolean.parseBoolean(parser.nextText());
-                                break;
+                        if ("PlanItem".equals(tagName)){ // 如果是一个项目开始，则属性赋值
+                            // 空间
+                            planItem = new PlanModel();
+                            // 赋值
+                            planItem.setId(Integer.parseInt(parser.getAttributeValue(null,PLANMODEL_PARAM_ENUM.id.name()))); //id
+                            planItem.setDoThing(parser.getAttributeValue(null,PLANMODEL_PARAM_ENUM.doThing.name()));         //doThing
+                            // 时间段
+                            st = parser.getAttributeValue(null,PLANMODEL_PARAM_ENUM.startTime.name());
+                            et = parser.getAttributeValue(null,PLANMODEL_PARAM_ENUM.endTime.name());
+                            ts = new TimeStruct(st,et);
+                            planItem.setDuring(ts);
+                            // 赋值boolean
+                            planItem.isBellAlert = Boolean.valueOf(parser.getAttributeValue(null,PLANMODEL_PARAM_ENUM.isBellAlert.name())); // isBellAlert
+                            planItem.isShock = Boolean.valueOf(parser.getAttributeValue(null,PLANMODEL_PARAM_ENUM.isShock.name())); // isShock
+                            planItem.isOpen = Boolean.valueOf(parser.getAttributeValue(null,PLANMODEL_PARAM_ENUM.isOpen.name())); // isOpen
+                            planItem.isExecuted = Boolean.valueOf(parser.getAttributeValue(null,PLANMODEL_PARAM_ENUM.isExecuted.name())); // isExecuted
+
+                            // 完毕后 在结尾tag添加到list
                         }
                         break;
                     case XmlPullParser.END_TAG: // 结束tag
                          if ("PlanItem".equals(tagName)){
                              // 读完了一项
-                             TimeStruct ts = new TimeStruct(st,et);
-                             planItem.setDuring(ts);
                              planList.add(planItem);
                          }
                          break;
@@ -266,8 +252,17 @@ public class FileManager {
                 planItem = planlist.get(i);
                 // <PlanItem>
                 serializer.startTag(null,"PlanItem");
-                serializer.attribute(null,"id",String.valueOf(i));
-                serializer.text("\n\t\t");
+                serializer.attribute(null,PLANMODEL_PARAM_ENUM.id.name(),String.valueOf(i));
+                //serializer.text("\n\t\t");
+                serializer.attribute(null,PLANMODEL_PARAM_ENUM.doThing.name(),planItem.getDoThing());
+                serializer.attribute(null,PLANMODEL_PARAM_ENUM.startTime.name(),planItem.getDuring().startTime);
+                serializer.attribute(null,PLANMODEL_PARAM_ENUM.endTime.name(),planItem.getDuring().endTime);
+                serializer.attribute(null,PLANMODEL_PARAM_ENUM.isBellAlert.name(),String.valueOf(planItem.isBellAlert));
+                serializer.attribute(null,PLANMODEL_PARAM_ENUM.isShock.name(),String.valueOf(planItem.isShock));
+                serializer.attribute(null,PLANMODEL_PARAM_ENUM.isOpen.name(),String.valueOf(planItem.isOpen));
+                serializer.attribute(null,PLANMODEL_PARAM_ENUM.isExecuted.name(),String.valueOf(planItem.isExecuted));
+
+                /*
                 // 内容
                 serializer.startTag(null,PLANMODEL_PARAM_ENUM.doThing.name());
                 serializer.text(planItem.getDoThing());
@@ -303,6 +298,8 @@ public class FileManager {
                 serializer.text(String.valueOf(planItem.isExecuted));
                 serializer.endTag(null,PLANMODEL_PARAM_ENUM.isExecuted.name());
                 serializer.text("\n\t\t");
+
+                 */
                 // </PlanItem>
                 serializer.endTag(null,"PlanItem");
                 serializer.text("\n");
