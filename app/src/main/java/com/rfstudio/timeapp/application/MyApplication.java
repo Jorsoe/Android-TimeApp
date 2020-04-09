@@ -6,10 +6,11 @@ import android.util.Log;
 
 import com.rfstudio.timeapp.utilsModel.PlanModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyApplication extends Application {
-    private List<PlanModel> planLists;      // PlanList
+    private ArrayList<PlanModel> planLists;      // PlanList
 
     private Context context;        // 存储本应用的上下文
 
@@ -21,11 +22,11 @@ public class MyApplication extends Application {
 
     }
 
-    public List<PlanModel> getPlanLists() {
+    public ArrayList<PlanModel> getPlanLists() {
         return planLists;
     }
 
-    public void setPlanLists(List<PlanModel> planLists) {
+    public void setPlanLists(ArrayList<PlanModel> planLists) {
         this.planLists = planLists;
     }
 

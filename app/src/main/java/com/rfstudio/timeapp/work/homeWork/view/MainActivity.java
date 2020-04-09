@@ -17,10 +17,14 @@ import com.google.android.material.navigation.NavigationView;
 import com.rfstudio.timeapp.R;
 import com.rfstudio.timeapp.application.MyApplication;
 import com.rfstudio.timeapp.utils.FileManager;
+import com.rfstudio.timeapp.utils.TimeStruct;
+import com.rfstudio.timeapp.utilsModel.PlanModel;
 import com.rfstudio.timeapp.work.autopalnWork.view.AutoPlanActivity;
 import com.rfstudio.timeapp.work.customplanWork.view.CustomPlanActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,7 +55,24 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        ArrayList<PlanModel> planList = new ArrayList<PlanModel>();
+        for (int i = 0 ; i< 5 ; i++){
+            PlanModel planItem = new PlanModel();
+            planItem.setDoThing("dothing+" + i );
+            planItem.setId(i);
+            TimeStruct t = new TimeStruct("sTime :" + i , "eTime" + i);
+            planItem.setDuring(t);
+
+            planList.add(planItem);
+        }
+
         FileManager fileManager = new FileManager(getApplicationContext());
+        fileManager.addPlanListInXmlFile(planList,FileManager.savefileName);
+
+        ArrayList<PlanModel> planLists = fileManager.getPlanlistInXmlFile(FileManager.savefileName);
+        fileManager.addPlanListInXmlFile(planLists,FileManager.configfileName);
+        
+
 
     }
 
