@@ -2,6 +2,7 @@ package com.rfstudio.timeapp.work.homeWork.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -26,7 +27,10 @@ import com.rfstudio.timeapp.work.customplanWork.view.CustomPlanActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
         ConfigInfoModel configInfoModel = FileManager.buildConfigInfoModel(FileManager.configfileName,getApplicationContext());
 
         Toast.makeText(getApplicationContext(),"新用户："+configInfoModel.isNewAccount ,Toast.LENGTH_LONG).show();
+
+        Log.e("看看填写 : " , TimeStruct.timeToString(null,null,"12"));
 
 
 

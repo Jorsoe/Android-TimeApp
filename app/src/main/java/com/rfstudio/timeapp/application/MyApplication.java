@@ -8,6 +8,7 @@ import com.rfstudio.timeapp.utilsModel.PlanModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 public class MyApplication extends Application {
     private ArrayList<PlanModel> planLists;      // PlanList
@@ -17,8 +18,9 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i("aplci" ,"application 初见了:" + getBaseContext().getExternalFilesDir(null).getPath());
+       /// Log.i("aplci" ,"application 初见了:" + getBaseContext().getExternalFilesDir(null).getPath());
         context = getBaseContext();
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
 
     }
 

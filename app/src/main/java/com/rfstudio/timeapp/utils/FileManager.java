@@ -266,8 +266,8 @@ public class FileManager {
                 serializer.attribute(null,PLANMODEL_PARAM_ENUM.id.name(),String.valueOf(i));
                 //serializer.text("\n\t\t");
                 serializer.attribute(null,PLANMODEL_PARAM_ENUM.doThing.name(),planItem.getDoThing());
-                serializer.attribute(null,PLANMODEL_PARAM_ENUM.startTime.name(),planItem.getDuring().startTime);
-                serializer.attribute(null,PLANMODEL_PARAM_ENUM.endTime.name(),planItem.getDuring().endTime);
+                serializer.attribute(null,PLANMODEL_PARAM_ENUM.startTime.name(),planItem.getDuring().getStartTime());
+                serializer.attribute(null,PLANMODEL_PARAM_ENUM.endTime.name(),planItem.getDuring().getEndTime());
                 serializer.attribute(null,PLANMODEL_PARAM_ENUM.isBellAlert.name(),String.valueOf(planItem.isBellAlert));
                 serializer.attribute(null,PLANMODEL_PARAM_ENUM.isShock.name(),String.valueOf(planItem.isShock));
                 serializer.attribute(null,PLANMODEL_PARAM_ENUM.isOpen.name(),String.valueOf(planItem.isOpen));
