@@ -26,6 +26,7 @@ public class RingtoneOrder {
         RingtoneManager ringtoneManager = new RingtoneManager(context);
         this.count = ringtoneManager.getCursor().getCount();
 
+
         for (int i=0 ; i<count ; i++){
             ringtoneList.add(ringtoneManager.getRingtone(i));
             uriList.add(ringtoneManager.getRingtoneUri(i));

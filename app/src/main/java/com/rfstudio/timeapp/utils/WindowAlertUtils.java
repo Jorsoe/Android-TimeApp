@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.rfstudio.timeapp.application.MyApplication;
 
@@ -16,6 +17,7 @@ public class WindowAlertUtils {
     private MyApplication application;
     private Context context;
     private WindowManager windowManager;
+    private static boolean isOpenPermission = false;
 
     public WindowAlertUtils(Context context) {
         this.context = context;
@@ -23,11 +25,10 @@ public class WindowAlertUtils {
     }
 
     /**
-     * 展示弹窗
-     * @param view 要展示的内容
+     * 提示用户 启动覆盖最顶层view权限，以开启弹窗
+     * @param context
      */
-    public void showWindow(View view){
-        // 显示弹窗
+    public static void overlayAppPermission(Context context){
 
         if (Build.VERSION.SDK_INT >= 23) {
             if (!Settings.canDrawOverlays(context)) {
@@ -36,11 +37,17 @@ public class WindowAlertUtils {
                 //startActivityForResult(intent, 1);
                 context.startActivity(intent1);
                 return;
-            } else {
-                //TODO do something you need
-                dialogWindow(view);
             }
-        }else
+        }
+    }
+    /**
+     * 展示弹窗
+     * @param view 要展示的内容
+     */
+    public void showWindow(View view){
+        // 显示弹窗
+
+        if (isOpenPermission)
             dialogWindow(view);
     }
 
@@ -49,15 +56,6 @@ public class WindowAlertUtils {
      * @param view 弹窗内容view
      */
     private void dialogWindow(View view){
-        int index = application.getRingtoneIndex();
-
-        // 铃声
-        RingtoneOrder ringtoneOrder = new RingtoneOrder(context);
-        Ringtone ringtone = ringtoneOrder.getRingtoneList().get(index);
-        ringtone.play();
-        // 震动
-        VibrateAndRingUtil vibrateAndRingUtil = new VibrateAndRingUtil(context);
-        vibrateAndRingUtil.playBySetting();
 
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
@@ -90,5 +88,21 @@ public class WindowAlertUtils {
      */
     public void removeWindowView(View view){
         windowManager.removeView(view);
+    }
+
+    /**
+     * 是否开启 悬浮 权限
+     * @return
+     */
+    public static boolean isIsOpenPermission(Context context) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (!Settings.canDrawOverlays(context)) {
+                isOpenPermission = false;
+            }else
+                isOpenPermission = true;
+        }else {
+            isOpenPermission = true;
+        }
+        return isOpenPermission;
     }
 }

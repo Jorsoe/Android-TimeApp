@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -32,8 +33,9 @@ public class NotifyAlertReceiver extends BroadcastReceiver {
         Toast.makeText(context,"时间到",Toast.LENGTH_LONG).show();
 
         application = (MyApplication)context.getApplicationContext();
-        PlanModel planItem = (PlanModel) intent.getSerializableExtra("PlanItem");
-
+        //PlanModel planItem = (PlanModel) intent.getSerializableExtra("PlanItem");
+        PlanModel planItem = new PlanModel();
+        planItem.setDoThing("222222222");
         // 通知栏
         notifyControl(context,planItem);
 
@@ -73,6 +75,7 @@ public class NotifyAlertReceiver extends BroadcastReceiver {
         // 定制通知栏
         Notification notification= null;
 
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             notification = new Notification.Builder(context,channelId)
                     .setContentTitle(application.getAppName() + " 提醒你 时间到啦！") // 标题
@@ -102,13 +105,16 @@ public class NotifyAlertReceiver extends BroadcastReceiver {
     }
 
 
-
-
     /**
      * 时间到 弹窗
      * @param context
      */
     private View getDialogView(final Context context,PlanModel planItem){
+        // 设置铃声/震动
+        final VibrateAndRingUtil vibrateAndRingUtil = new VibrateAndRingUtil(context);
+        int index = application.getRingtoneIndex();
+
+        vibrateAndRingUtil.playBySetting(index,planItem);
 
         // view
         final View dialogView = View.inflate(context,R.layout.alertdialog_timeover,null);
@@ -119,6 +125,7 @@ public class NotifyAlertReceiver extends BroadcastReceiver {
             @Override
             public void onClick(View v) {
                 winAlert.removeWindowView(dialogView);
+                vibrateAndRingUtil.closeAll();
                 // 打开应用程序某一页
                 Log.e("hahahah","windowManager.removeView(view);");
                 /*
@@ -132,6 +139,7 @@ public class NotifyAlertReceiver extends BroadcastReceiver {
             @Override
             public void onClick(View v) {
                 winAlert.removeWindowView(dialogView);
+                vibrateAndRingUtil.closeAll();
                 // 做些数据处理
             }
         });
@@ -144,6 +152,7 @@ public class NotifyAlertReceiver extends BroadcastReceiver {
                     case KeyEvent.KEYCODE_HOME:
                     case KeyEvent.KEYCODE_MENU:
                         winAlert.removeWindowView(dialogView);
+                        vibrateAndRingUtil.closeAll();
                         // 去除弹出框，那么得设置一会再提醒
                         break;
                         default:return false;

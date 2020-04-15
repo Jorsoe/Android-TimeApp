@@ -28,6 +28,7 @@
 
         <receiver android:name=".utils.NotifyAlertReceiver"/>
         <service android:name=".service.AlarmService"/>
+        <service android:name=".service.SystemTipService"/>
 
 
     </application>

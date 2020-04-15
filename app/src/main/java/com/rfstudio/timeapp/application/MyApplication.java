@@ -44,7 +44,7 @@ public class MyApplication extends Application {
         this.mainContext = mainContext;
     }
 
-    public Context getContext() {
+    public Context getMainContext() {
         return mainContext;
     }
 

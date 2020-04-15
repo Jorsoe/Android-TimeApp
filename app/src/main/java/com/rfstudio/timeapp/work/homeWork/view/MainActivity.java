@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,10 +23,12 @@ import com.google.android.material.navigation.NavigationView;
 import com.rfstudio.timeapp.R;
 import com.rfstudio.timeapp.application.MyApplication;
 import com.rfstudio.timeapp.service.AlarmService;
+import com.rfstudio.timeapp.service.SystemTipService;
 import com.rfstudio.timeapp.utils.FileManager;
 import com.rfstudio.timeapp.utils.NotifyAlertReceiver;
 import com.rfstudio.timeapp.utils.TimeStruct;
 import com.rfstudio.timeapp.utils.VibrateAndRingUtil;
+import com.rfstudio.timeapp.utils.WindowAlertUtils;
 import com.rfstudio.timeapp.utilsModel.ConfigInfoModel;
 import com.rfstudio.timeapp.utilsModel.PlanModel;
 import com.rfstudio.timeapp.work.autopalnWork.view.AutoPlanActivity;
@@ -52,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         application = (MyApplication)getApplication();
         application.setMainContext(this);
+        // 开启提醒服务
+        startService(new Intent(this, SystemTipService.class));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -99,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
         application = (MyApplication)getApplication();
         application.setPlanLists(FileManager.getPlanlistInXmlFile(FileManager.savefileName,getBaseContext()));
 
-        VibrateAndRingUtil vibrateAndRingUtil = new VibrateAndRingUtil(this);
-        vibrateAndRingUtil.playBySetting();
 
 
     }
@@ -152,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
     //    Log.e(FLAG,"--------------------------------------------------onRestart");
+        // 开启提醒服务
+        startService(new Intent(this, SystemTipService.class));
         super.onRestart();
     }
 
