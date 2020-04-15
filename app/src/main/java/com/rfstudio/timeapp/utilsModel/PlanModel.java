@@ -4,7 +4,12 @@ import android.graphics.Color;
 
 import com.rfstudio.timeapp.utils.TimeStruct;
 
-public class PlanModel {
+import java.io.Serializable;
+
+/**
+ * planmodel  顺便序列化，可由intent传输
+ */
+public class PlanModel implements Serializable {
     private int id;
     private String doThing;
     private TimeStruct during;

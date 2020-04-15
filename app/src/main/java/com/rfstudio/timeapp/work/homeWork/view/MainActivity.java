@@ -2,11 +2,14 @@ package com.rfstudio.timeapp.work.homeWork.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -18,8 +21,11 @@ import com.github.clans.fab.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.rfstudio.timeapp.R;
 import com.rfstudio.timeapp.application.MyApplication;
+import com.rfstudio.timeapp.service.AlarmService;
 import com.rfstudio.timeapp.utils.FileManager;
+import com.rfstudio.timeapp.utils.NotifyAlertReceiver;
 import com.rfstudio.timeapp.utils.TimeStruct;
+import com.rfstudio.timeapp.utils.VibrateAndRingUtil;
 import com.rfstudio.timeapp.utilsModel.ConfigInfoModel;
 import com.rfstudio.timeapp.utilsModel.PlanModel;
 import com.rfstudio.timeapp.work.autopalnWork.view.AutoPlanActivity;
@@ -34,14 +40,18 @@ import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
+    String FLAG = "MainActivity";
     private AppBarConfiguration mAppBarConfiguration;
     MyApplication application;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+     //   Log.e(FLAG,"--------------------------------------------------oncreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        application = (MyApplication)getApplication();
+        application.setMainContext(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        ////////////////////测试//////////////////////////////////////////
 
         ArrayList<PlanModel> planList = new ArrayList<PlanModel>();
         for (int i = 0 ; i< 5 ; i++){
@@ -81,7 +93,14 @@ public class MainActivity extends AppCompatActivity {
 
         Log.e("看看填写 : " , TimeStruct.timeToString(null,null,"12"));
 
+        Intent intent = new Intent(this, AlarmService.class);
+        startService(intent);
 
+        application = (MyApplication)getApplication();
+        application.setPlanLists(FileManager.getPlanlistInXmlFile(FileManager.savefileName,getBaseContext()));
+
+        VibrateAndRingUtil vibrateAndRingUtil = new VibrateAndRingUtil(this);
+        vibrateAndRingUtil.playBySetting();
 
 
     }
@@ -109,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AutoPlanActivity.class);
                 startActivity(intent);
+
             }
         });
 
@@ -117,13 +137,113 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CustomPlanActivity.class);
                 startActivity(intent);
+
             }
         });
     }
     @Override
     public boolean onSupportNavigateUp() {
+     //   Log.e(FLAG,"--------------------------------------------------onSupportNavigateUp");
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    @Override
+    protected void onRestart() {
+    //    Log.e(FLAG,"--------------------------------------------------onRestart");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+      //  Log.e(FLAG,"--------------------------------------------------onPostCreate");
+        super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onPostResume() {
+     //   Log.e(FLAG,"--------------------------------------------------onPostResume");
+        super.onPostResume();
+    }
+
+    @Override
+    protected void onStart() {
+     //   Log.e(FLAG,"--------------------------------------------------onStart");
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+      //  Log.e(FLAG,"--------------------------------------------------onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+      //  Log.e(FLAG,"--------------------------------------------------onDestory");
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onTitleChanged(CharSequence title, int color) {
+      //  Log.e(FLAG,"--------------------------------------------------onTitleChanged");
+        super.onTitleChanged(title, color);
+    }
+
+    @Override
+    public void onSupportActionModeStarted(@NonNull ActionMode mode) {
+      //  Log.e(FLAG,"--------------------------------------------------onSupportActionModeStarted");
+        super.onSupportActionModeStarted(mode);
+    }
+
+    @Override
+    public void onSupportActionModeFinished(@NonNull ActionMode mode) {
+     //   Log.e(FLAG,"--------------------------------------------------onSupportActionModeFisished");
+        super.onSupportActionModeFinished(mode);
+    }
+
+    @Override
+    public void onContentChanged() {
+     //   Log.e(FLAG,"--------------------------------------------------onContentChanged");
+        super.onContentChanged();
+    }
+
+    @Override
+    public void onPanelClosed(int featureId, @NonNull Menu menu) {
+      //  Log.e(FLAG,"--------------------------------------------------onPanelClosed");
+        super.onPanelClosed(featureId, menu);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+      //  Log.e(FLAG,"--------------------------------------------------onSaveInstanceState");
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onNightModeChanged(int mode) {
+      //  Log.e(FLAG,"--------------------------------------------------onNightModeChanged");
+        super.onNightModeChanged(mode);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+       // Log.e(FLAG,"--------------------------------------------------onActivityResult");
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onResume() {
+       // Log.e(FLAG,"--------------------------------------------------onResume");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+       // Log.e(FLAG,"--------------------------------------------------onPause");
+        super.onPause();
+    }
+
+
 }

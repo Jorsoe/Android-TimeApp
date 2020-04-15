@@ -49,7 +49,8 @@ public class FileManager {
     private enum CONFIG_PARAM_ENUM{
         Config,
         Content,
-        isNewAccount
+        isNewAccount,
+        ringtoneIndex
     }
 
     private Context context;
@@ -355,6 +356,7 @@ public class FileManager {
             serializer.startTag(null,CONFIG_PARAM_ENUM.Content.name());
 
             serializer.attribute(null,CONFIG_PARAM_ENUM.isNewAccount.name(),String.valueOf(configInfoModel.isNewAccount));
+            serializer.attribute(null,CONFIG_PARAM_ENUM.ringtoneIndex.name(),String.valueOf(configInfoModel.ringtoneIndex));
 
             serializer.endTag(null,CONFIG_PARAM_ENUM.Content.name());
 
@@ -415,6 +417,7 @@ public class FileManager {
                         if (CONFIG_PARAM_ENUM.Content.name().equals(tagName)){ // 如果是content 标签，取值
                             configInfoModel = new ConfigInfoModel();
                             configInfoModel.isNewAccount = Boolean.valueOf(parser.getAttributeValue(null,CONFIG_PARAM_ENUM.isNewAccount.name()));
+                            configInfoModel.ringtoneIndex = Integer.parseInt(parser.getAttributeValue(null,CONFIG_PARAM_ENUM.ringtoneIndex.name()));
                         }
                         break;
                     case XmlPullParser.END_TAG: // 结束tag
@@ -436,6 +439,9 @@ public class FileManager {
 
     /**
      *  根据config文件 来构建一个 ConfigInfoModel,
+     *  无文件/失败 将会是默认属性，
+     *
+     *  最终会生成一个有内容的文件
      * @param fileName
      * @param context 请使用ApplicationContext
      * @return ConfigInfoModel
@@ -446,6 +452,7 @@ public class FileManager {
         if (!fileIsExisted(fileName,context)){
             // 文件不存在，则为标准的ConfigInfoModel
             configInfoModel = new ConfigInfoModel();
+            updateConfigFile(configInfoModel,fileName,context);
         }else {
             // 读取文件 生成对象
             configInfoModel = getConfigInfoModel(fileName,context);
@@ -453,6 +460,7 @@ public class FileManager {
             if (configInfoModel == null ){
                 // 对象为空 表示读取失败，则 为标准
                 configInfoModel = new ConfigInfoModel();
+                updateConfigFile(configInfoModel,fileName,context);
             }
         }
 
