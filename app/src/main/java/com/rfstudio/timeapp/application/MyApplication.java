@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.util.Log;
 
+import com.beardedhen.androidbootstrap.TypefaceProvider;
+import com.dinuscxj.progressbar.CircleProgressBar;
 import com.rfstudio.timeapp.utilsModel.PlanModel;
 
 import java.util.ArrayList;
@@ -23,13 +25,16 @@ public class MyApplication extends Application {
     // 设定alarmManager 的pendingIntent，用于解除/删除/修改 查找对应闹钟
     // String 就以 requestCode 来作为 key
     private Map<String,PendingIntent> pendingIntentMap;
+    private CircleProgressBar circleProgressBar;        // 环形进度条控件()
+
+
 
     @Override
     public void onCreate() {
         super.onCreate();
        /// Log.i("aplci" ,"application 初见了:" + getBaseContext().getExternalFilesDir(null).getPath());
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
-
+        TypefaceProvider.registerDefaultIconSets();
     }
 
     public ArrayList<PlanModel> getPlanLists() {
@@ -71,5 +76,13 @@ public class MyApplication extends Application {
 
     public void setPendingIntentMap(Map<String, PendingIntent> pendingIntentMap) {
         this.pendingIntentMap = pendingIntentMap;
+    }
+
+    public CircleProgressBar getCircleProgressBar() {
+        return circleProgressBar;
+    }
+
+    public void setCircleProgressBar(CircleProgressBar circleProgressBar) {
+        this.circleProgressBar = circleProgressBar;
     }
 }

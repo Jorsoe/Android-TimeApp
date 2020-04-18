@@ -12,9 +12,10 @@ import java.util.Date;
  * 秒数默认为 00
  */
 public class TimeStruct  {
-    // 只表示当天
+    // 只表示当天,从纪元到设置的时长
     private long startTimeMillis;     // 开始时间 毫秒 （只读）
-    private long endTimeMillis;       // 结束时间 毫秒
+    private long endTimeMillis;       // 结束时间 毫秒  （只读）
+    private long duringMillis;        // 开始到结束的 时长毫秒 (只读）
 
     private String startTime;
     private String endTime;
@@ -133,6 +134,18 @@ public class TimeStruct  {
         return timeString.toString();
     }
 
+    /**
+     *  提供目标时间millis，将会返回 到目前时间剩余的时间
+     * @param targetTimeMillis 目标时间
+     * @return 返回还剩的时间的毫秒数, 返回-1 表示目标时间已经过期
+     */
+    public static long getRemainMillis(long targetTimeMillis){
+        if (targetTimeMillis > System.currentTimeMillis())
+            return -1;
+        long remainTime = System.currentTimeMillis() - targetTimeMillis;
+
+        return remainTime;
+    }
 
     public String getStartTime() {
         return startTime;
@@ -180,5 +193,10 @@ public class TimeStruct  {
 
         requestCode = hourInt + minuteInt;
         return requestCode;
+    }
+
+    public long getDuringMillis() {
+        duringMillis = this.startTimeMillis - this.endTimeMillis;
+        return duringMillis;
     }
 }

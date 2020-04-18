@@ -10,25 +10,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
-        <activity
-            android:name=".work.homeWork.view.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
+        <!-- 此作为启动页-->
+        <activity android:name=".work.splash.SplashActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".work.homeWork.view.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:configChanges="orientation|keyboardHidden"
+            >
+
+        </activity>
+
+
         <activity android:name=".work.customplanWork.view.CustomPlanActivity"/>
         <activity android:name=".work.autopalnWork.view.AutoPlanActivity"/>
-
+        <activity android:name=".work.countdownWork.view.CountdownActivity">
+        </activity>
 
         <receiver android:name=".utils.NotifyAlertReceiver"/>
+
         <service android:name=".service.AlarmService"/>
         <service android:name=".service.SystemTipService"/>
+        <service android:name=".service.CountdownService"/>
+
 
 
     </application>

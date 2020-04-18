@@ -34,6 +34,7 @@ public class VibrateAndRingUtil {
             if (planItem.isShock)
                 playVibrate();
         }
+        
 
     }
 

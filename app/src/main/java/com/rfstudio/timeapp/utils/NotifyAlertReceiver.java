@@ -34,6 +34,7 @@ public class NotifyAlertReceiver extends BroadcastReceiver {
 
         application = (MyApplication)context.getApplicationContext();
         //PlanModel planItem = (PlanModel) intent.getSerializableExtra("PlanItem");
+        /////////// 测试////////////////////////////
         PlanModel planItem = new PlanModel();
         planItem.setDoThing("222222222");
         // 通知栏
@@ -147,7 +148,7 @@ public class NotifyAlertReceiver extends BroadcastReceiver {
         dialogView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                switch (event.getKeyCode()){
+                switch (keyCode){
                     case KeyEvent.KEYCODE_BACK:
                     case KeyEvent.KEYCODE_HOME:
                     case KeyEvent.KEYCODE_MENU:

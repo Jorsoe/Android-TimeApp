@@ -45,6 +45,7 @@ Software architecture description
 ```doc
 git pull origin master --allow-unrelated-histories
 ```
++ Broadcast 的生命周期是 当`onRecive()` 执行完毕后消除
 
 #### 提一下
 + list 的排序依据就是 requestCode （TimeStruct 的属性）

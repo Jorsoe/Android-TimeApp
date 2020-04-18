@@ -29,7 +29,7 @@ public class AutoPlanActivity extends AppCompatActivity {
             public void onClick(View v) {
                // Log.e("MainActivity","---------------------看看-----------------------------");
                 Intent intent = new Intent(AutoPlanActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }
         });

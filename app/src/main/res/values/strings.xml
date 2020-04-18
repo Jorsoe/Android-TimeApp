@@ -26,4 +26,10 @@
     <string name="alertdialog_timeover_btn_ok">好的</string>
     <string name="alertdialog_timeover_btn_cencel">稍等</string>
 
+    <!--dd按钮-->
+    <string name="dd_progress_btn_clickIdle">Click</string>
+    
+    <!--欢迎-->
+    <string name="splashpage_hello">Hello</string>
+
 </resources>

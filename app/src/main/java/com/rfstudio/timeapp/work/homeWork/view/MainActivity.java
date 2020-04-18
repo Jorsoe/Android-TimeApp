@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.TabHost;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,21 +24,15 @@ import com.rfstudio.timeapp.application.MyApplication;
 import com.rfstudio.timeapp.service.AlarmService;
 import com.rfstudio.timeapp.service.SystemTipService;
 import com.rfstudio.timeapp.utils.FileManager;
-import com.rfstudio.timeapp.utils.NotifyAlertReceiver;
 import com.rfstudio.timeapp.utils.TimeStruct;
-import com.rfstudio.timeapp.utils.VibrateAndRingUtil;
-import com.rfstudio.timeapp.utils.WindowAlertUtils;
 import com.rfstudio.timeapp.utilsModel.ConfigInfoModel;
 import com.rfstudio.timeapp.utilsModel.PlanModel;
-import com.rfstudio.timeapp.work.autopalnWork.view.AutoPlanActivity;
+import com.rfstudio.timeapp.work.countdownWork.view.CountdownActivity;
 import com.rfstudio.timeapp.work.customplanWork.view.CustomPlanActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,31 +43,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-     //   Log.e(FLAG,"--------------------------------------------------oncreate");
+        Log.e(FLAG,"--------------------------------------------------oncreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         application = (MyApplication)getApplication();
         application.setMainContext(this);
         // 开启提醒服务
         startService(new Intent(this, SystemTipService.class));
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        listenFab();
+        orangialIniteView();
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        // 泵没有这个home
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home,R.id.nav_setting,R.id.nav_about)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+
 
         ////////////////////测试//////////////////////////////////////////
 
@@ -104,10 +85,31 @@ public class MainActivity extends AppCompatActivity {
         application = (MyApplication)getApplication();
         application.setPlanLists(FileManager.getPlanlistInXmlFile(FileManager.savefileName,getBaseContext()));
 
+        //startActivity(new Intent(this, CowndownActivity.class));
 
 
     }
 
+    private void orangialIniteView(){
+        // 原生创建view
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        listenFab();
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        // 泵没有这个home
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home,R.id.nav_setting,R.id.nav_about)
+                .setDrawerLayout(drawer)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+    }
     /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -129,7 +131,14 @@ public class MainActivity extends AppCompatActivity {
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 Intent intent = new Intent(MainActivity.this, AutoPlanActivity.class);
+                startActivity(intent);
+
+                 */
+                // 非重新创建模式启动
+                Intent intent = new Intent(MainActivity.this, CountdownActivity.class);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
 
             }
@@ -144,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onSupportNavigateUp() {
      //   Log.e(FLAG,"--------------------------------------------------onSupportNavigateUp");
@@ -154,99 +164,99 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-    //    Log.e(FLAG,"--------------------------------------------------onRestart");
+        Log.e(FLAG,"--------------------------------------------------onRestart");
         // 开启提醒服务
-        startService(new Intent(this, SystemTipService.class));
+        startService(new Intent(this, SystemTipService.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         super.onRestart();
     }
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-      //  Log.e(FLAG,"--------------------------------------------------onPostCreate");
+        Log.e(FLAG,"--------------------------------------------------onPostCreate");
         super.onPostCreate(savedInstanceState);
     }
 
     @Override
     protected void onPostResume() {
-     //   Log.e(FLAG,"--------------------------------------------------onPostResume");
+        Log.e(FLAG,"--------------------------------------------------onPostResume");
         super.onPostResume();
     }
 
     @Override
     protected void onStart() {
-     //   Log.e(FLAG,"--------------------------------------------------onStart");
+        Log.e(FLAG,"--------------------------------------------------onStart");
         super.onStart();
     }
 
     @Override
     protected void onStop() {
-      //  Log.e(FLAG,"--------------------------------------------------onStop");
+        Log.e(FLAG,"--------------------------------------------------onStop");
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-      //  Log.e(FLAG,"--------------------------------------------------onDestory");
+        Log.e(FLAG,"--------------------------------------------------onDestory");
         super.onDestroy();
     }
 
     @Override
     protected void onTitleChanged(CharSequence title, int color) {
-      //  Log.e(FLAG,"--------------------------------------------------onTitleChanged");
+        Log.e(FLAG,"--------------------------------------------------onTitleChanged");
         super.onTitleChanged(title, color);
     }
 
     @Override
     public void onSupportActionModeStarted(@NonNull ActionMode mode) {
-      //  Log.e(FLAG,"--------------------------------------------------onSupportActionModeStarted");
+        Log.e(FLAG,"--------------------------------------------------onSupportActionModeStarted");
         super.onSupportActionModeStarted(mode);
     }
 
     @Override
     public void onSupportActionModeFinished(@NonNull ActionMode mode) {
-     //   Log.e(FLAG,"--------------------------------------------------onSupportActionModeFisished");
+        Log.e(FLAG,"--------------------------------------------------onSupportActionModeFisished");
         super.onSupportActionModeFinished(mode);
     }
 
     @Override
     public void onContentChanged() {
-     //   Log.e(FLAG,"--------------------------------------------------onContentChanged");
+        Log.e(FLAG,"--------------------------------------------------onContentChanged");
         super.onContentChanged();
     }
 
     @Override
     public void onPanelClosed(int featureId, @NonNull Menu menu) {
-      //  Log.e(FLAG,"--------------------------------------------------onPanelClosed");
+        Log.e(FLAG,"--------------------------------------------------onPanelClosed");
         super.onPanelClosed(featureId, menu);
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-      //  Log.e(FLAG,"--------------------------------------------------onSaveInstanceState");
+        Log.e(FLAG,"--------------------------------------------------onSaveInstanceState");
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onNightModeChanged(int mode) {
-      //  Log.e(FLAG,"--------------------------------------------------onNightModeChanged");
+        Log.e(FLAG,"--------------------------------------------------onNightModeChanged");
         super.onNightModeChanged(mode);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-       // Log.e(FLAG,"--------------------------------------------------onActivityResult");
+        Log.e(FLAG,"--------------------------------------------------onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     protected void onResume() {
-       // Log.e(FLAG,"--------------------------------------------------onResume");
+        Log.e(FLAG,"--------------------------------------------------onResume");
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-       // Log.e(FLAG,"--------------------------------------------------onPause");
+        Log.e(FLAG,"--------------------------------------------------onPause");
         super.onPause();
     }
 
