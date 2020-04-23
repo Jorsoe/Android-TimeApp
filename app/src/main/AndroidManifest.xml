@@ -38,7 +38,6 @@
 
         <service android:name=".service.AlarmService"/>
         <service android:name=".service.SystemTipService"/>
-        <service android:name=".service.CountdownService"/>
 
 
 

@@ -5,11 +5,9 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -24,9 +22,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dinuscxj.progressbar.CircleProgressBar;
 import com.rfstudio.timeapp.R;
-import com.rfstudio.timeapp.service.CountdownService;
-import com.rfstudio.timeapp.service.SystemTipService;
+import com.rfstudio.timeapp.application.MyApplication;
 import com.rfstudio.timeapp.utils.TimeStruct;
+import com.rfstudio.timeapp.utilsModel.PlanModel;
 import com.rfstudio.timeapp.work.homeWork.view.MainActivity;
 
 
@@ -42,10 +40,15 @@ public class CountdownActivity extends AppCompatActivity {
     private CircleProgressBar mCircleProgressBar;
     // 完成按钮
     private CircularProgressButton finishButton;
+    PlanModel nowPlanItem;
+    MyApplication application;
+
     // 按钮进度条是否完成
     private boolean isProgressFinished = false;
     // 进度
     private float nowProgress = 0f;
+
+
     private long targetTimeMillis;               // 从纪元到目标时间的毫秒数,,其实为当前计划的 结束时间endTimeMillis
     private long totalMillis;                      // 倒计时时长，，从plan的timrstruct中d的 duringMillis获取
     private long remainTimeMillis ;                // 剩余时间,, 某种形式可以获取到
@@ -58,11 +61,14 @@ public class CountdownActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_countdown_page);
+        application = (MyApplication) getApplication();
+        nowPlanItem = application.getNowPlanItem();
+
 
         mCircleProgressBar = findViewById(R.id.circle_progress);
         finishButton = findViewById(R.id.btn_cpb_countdown_ok);
         initefinishButton();
-        // 初始关闭
+        // 初始关闭完成按钮
         finishButton.setVisibility(View.INVISIBLE);
 
         // 倒计时进度
@@ -70,18 +76,6 @@ public class CountdownActivity extends AppCompatActivity {
         //simulateProgress(remainTimeMillis);
         simulateProgress(10*1000);
 
-        /*
-        // 注册广播
-        IntentFilter intentFilter = new IntentFilter("com.countdown.receiver");
-        registerReceiver(new BroadcastInCountdown(),intentFilter);
-
-        // 启动服务
-        if (! isServiceWorked(CountdownService.class.getName())){
-            Log.e("CountdownServcie ","服务没有启动！！！！！！！");
-           // startService(new Intent(CountdownActivity.this,CountdownService.class));
-        }
-
-         */
 
 
     }
@@ -98,9 +92,9 @@ public class CountdownActivity extends AppCompatActivity {
     private void initeTimeParam(){
         /////////// 测试///////////
         // 从plan中获取endTimeMillis
-        targetTimeMillis = 0;
+        targetTimeMillis = nowPlanItem.getDuring().getEndTimeMillis();  //只作用于此
         // 总时间, 从plan中获取duringMillis
-        totalMillis = 0;
+        totalMillis = nowPlanItem.getDuring().getDuringMillis();
         // 获取剩余时间
         remainTimeMillis  = TimeStruct.getRemainMillis(targetTimeMillis);
     }
@@ -110,11 +104,11 @@ public class CountdownActivity extends AppCompatActivity {
      * @param remainTime 剩余时间
      */
     private void simulateProgress(long remainTime) {
-        /*
+        /***** 真正的代码
         nowProgress = (totalMillis - remainTimeMillis)/totalMillis;
         int downPart = floatToIntProgress(nowProgress);
         */
-        int downPart = 0;
+        int downPart = 0;  // 测试
         ValueAnimator animator = ValueAnimator.ofInt(downPart, 100);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -137,6 +131,7 @@ public class CountdownActivity extends AppCompatActivity {
                 //
                 Log.e("AAA","xhuxian;");
                 finishButton.setVisibility(View.VISIBLE);
+
 
             }
 
@@ -173,8 +168,18 @@ public class CountdownActivity extends AppCompatActivity {
      *  完成计划任务后
      */
     private void finishPlanWork(){
-        finishButton.setVisibility(View.VISIBLE);
-        // 完成后可以做点其他事，比如 队列问题等
+        // 完成后可以做点其他事
+        // 按钮样式
+        Resources r = CountdownActivity.this.getResources();
+        @SuppressLint("ResourceType") InputStream is = r.openRawResource(R.drawable.ic_done_white_48dp);
+        BitmapDrawable bmpDraw = new BitmapDrawable(is);
+        Bitmap bmp = bmpDraw.getBitmap();
+        // 结束图案
+        finishButton.doneLoadingAnimation(Color.GREEN,bmp);
+        finishButton.setClickable(false);   // 不可点击
+
+        // 可以弹窗了,push**********************************************************
+        addAlert();
     }
 
 
@@ -190,7 +195,7 @@ public class CountdownActivity extends AppCompatActivity {
 
                 //finishButton.setProgress(50);
                 finishButton.startMorphAnimation();
-                finishButtonAnimator((long) (1.5*1000));
+                finishButtonAnimator((long) (1.4*1000));
 
             }
         });
@@ -206,18 +211,12 @@ public class CountdownActivity extends AppCompatActivity {
             public void onAnimationUpdate(ValueAnimator animation) {
                 int progress = (int) animation.getAnimatedValue();
                 finishButton.setProgress(progress);
+
                 if (progress == 100){
                     //btnAnimator.end();
-                    // 图片
-                    Resources r = CountdownActivity.this.getResources();
-                    @SuppressLint("ResourceType") InputStream is = r.openRawResource(R.drawable.ic_done_white_48dp);
-                    BitmapDrawable bmpDraw = new BitmapDrawable(is);
-                    Bitmap bmp = bmpDraw.getBitmap();
-                    // 结束图案
-                    finishButton.doneLoadingAnimation(Color.GREEN,bmp);
+                    // 完成后的工作
+                    finishPlanWork();
 
-                    // 可以弹窗了,push**********************************************************
-                    addAlert();
                 }
             }
         });
@@ -237,7 +236,8 @@ public class CountdownActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // 除了跳转 还要对队列做点什么
-
+                        // 直接跳转即可， nowPlanItem 实在 Main 的start中实时获取的
+                        application.setNowPlanItem(null);   //最好还是为null吧
                         startActivity(new Intent(CountdownActivity.this,MainActivity.class));
                     }
                 });
@@ -258,8 +258,6 @@ public class CountdownActivity extends AppCompatActivity {
                 }
             }
         });
-        alertDialog.show();
-
         alertDialog.show();
     }
 

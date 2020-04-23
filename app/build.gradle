@@ -20,7 +20,9 @@ android {
     dataBinding {
         enabled true
     }
-    sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/otherview'] } }
+    sourceSets {
+        main { res.srcDirs = ['src/main/res', 'src/main/res/otherview', 'src/main/res/raw'] }
+    }
 }
 
 dependencies {

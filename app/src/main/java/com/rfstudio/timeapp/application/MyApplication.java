@@ -3,14 +3,12 @@ package com.rfstudio.timeapp.application;
 import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.util.Log;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.dinuscxj.progressbar.CircleProgressBar;
 import com.rfstudio.timeapp.utilsModel.PlanModel;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -58,7 +56,6 @@ public class MyApplication extends Application {
     }
 
     public PlanModel getNowPlanItem() {
-        nowPlanItem = planLists.get(0);
         return nowPlanItem;
     }
 
@@ -85,4 +82,9 @@ public class MyApplication extends Application {
     public void setCircleProgressBar(CircleProgressBar circleProgressBar) {
         this.circleProgressBar = circleProgressBar;
     }
+
+    public void setNowPlanItem(PlanModel nowPlanItem) {
+        this.nowPlanItem = nowPlanItem;
+    }
+
 }

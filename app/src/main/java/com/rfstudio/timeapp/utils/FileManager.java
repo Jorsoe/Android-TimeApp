@@ -208,7 +208,6 @@ public class FileManager {
                             // 空间
                             planItem = new PlanModel();
                             // 赋值
-                            planItem.setId(Integer.parseInt(parser.getAttributeValue(null,PLANMODEL_PARAM_ENUM.id.name()))); //id
                             planItem.setDoThing(parser.getAttributeValue(null,PLANMODEL_PARAM_ENUM.doThing.name()));         //doThing
                             // 时间段
                             st = parser.getAttributeValue(null,PLANMODEL_PARAM_ENUM.startTime.name());
@@ -264,7 +263,7 @@ public class FileManager {
                 planItem = planlist.get(i);
                 // <PlanItem>
                 serializer.startTag(null,"PlanItem");
-                serializer.attribute(null,PLANMODEL_PARAM_ENUM.id.name(),String.valueOf(i));
+                serializer.attribute(null,PLANMODEL_PARAM_ENUM.id.name(),String.valueOf(i));        // 不是planmode 的id
                 //serializer.text("\n\t\t");
                 serializer.attribute(null,PLANMODEL_PARAM_ENUM.doThing.name(),planItem.getDoThing());
                 serializer.attribute(null,PLANMODEL_PARAM_ENUM.startTime.name(),planItem.getDuring().getStartTime());

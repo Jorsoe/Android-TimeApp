@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.rfstudio.timeapp.R;
 import com.rfstudio.timeapp.application.MyApplication;
 import com.rfstudio.timeapp.utilsModel.PlanModel;
+import com.rfstudio.timeapp.work.countdownWork.view.CountdownActivity;
 
 /**
  * 定制好的通知栏通知
@@ -110,7 +111,7 @@ public class NotifyAlertReceiver extends BroadcastReceiver {
      * 时间到 弹窗
      * @param context
      */
-    private View getDialogView(final Context context,PlanModel planItem){
+    private View getDialogView(final Context context, final PlanModel planItem){
         // 设置铃声/震动
         final VibrateAndRingUtil vibrateAndRingUtil = new VibrateAndRingUtil(context);
         int index = application.getRingtoneIndex();
@@ -133,6 +134,11 @@ public class NotifyAlertReceiver extends BroadcastReceiver {
                 Intent intent = new Intent(context, AlarmService.class);
                 context.startService(intent);
                  */
+                // 点了 ok 就去countdown 界面
+                application.setNowPlanItem(planItem);       // 设置nowPlanItem
+                Intent intent = new Intent(context, CountdownActivity.class);
+                context.startActivity(intent);
+
             }
         });
 
@@ -142,6 +148,7 @@ public class NotifyAlertReceiver extends BroadcastReceiver {
                 winAlert.removeWindowView(dialogView);
                 vibrateAndRingUtil.closeAll();
                 // 做些数据处理
+                application.setNowPlanItem(planItem);       // 设置nowPlanItem
             }
         });
 

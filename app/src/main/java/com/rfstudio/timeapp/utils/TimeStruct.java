@@ -1,6 +1,5 @@
 package com.rfstudio.timeapp.utils;
 
-import android.content.Intent;
 import android.util.Log;
 
 import java.text.ParseException;
@@ -12,7 +11,7 @@ import java.util.Date;
  * 秒数默认为 00
  */
 public class TimeStruct  {
-    // 只表示当天,从纪元到设置的时长
+    // 只表示当天,从纪元到设置的时长,可直接用来定时服务
     private long startTimeMillis;     // 开始时间 毫秒 （只读）
     private long endTimeMillis;       // 结束时间 毫秒  （只读）
     private long duringMillis;        // 开始到结束的 时长毫秒 (只读）
@@ -135,7 +134,7 @@ public class TimeStruct  {
     }
 
     /**
-     *  提供目标时间millis，将会返回 到目前时间剩余的时间
+     *  提供目标时间millis(从纪元)，将会返回 到目前时间剩余的时间
      * @param targetTimeMillis 目标时间
      * @return 返回还剩的时间的毫秒数, 返回-1 表示目标时间已经过期
      */
@@ -195,8 +194,14 @@ public class TimeStruct  {
         return requestCode;
     }
 
+
     public long getDuringMillis() {
         duringMillis = this.startTimeMillis - this.endTimeMillis;
         return duringMillis;
+    }
+
+
+    public static int[] changeDuringToCodes(int startTimeHour,int endTimeHour){
+        
     }
 }
