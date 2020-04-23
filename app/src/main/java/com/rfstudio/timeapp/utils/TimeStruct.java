@@ -6,13 +6,20 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 注意：虽然展示结构有显示秒数，但在设定时不显示秒数
+ * 秒数默认为 00
+ */
 public class TimeStruct  {
-    // 只表示当天
+    // 只表示当天,从纪元到设置的时长,可直接用来定时服务
     private long startTimeMillis;     // 开始时间 毫秒 （只读）
-    private long endTimeMillis;       // 结束时间 毫秒
+    private long endTimeMillis;       // 结束时间 毫秒  （只读）
+    private long duringMillis;        // 开始到结束的 时长毫秒 (只读）
 
     private String startTime;
     private String endTime;
+
+    private int requestCode;          // 用于作为PendingItent 的标识(只读)
 
     /**
      * 传入 开始与结束 时间的字符串
@@ -126,6 +133,18 @@ public class TimeStruct  {
         return timeString.toString();
     }
 
+    /**
+     *  提供目标时间millis(从纪元)，将会返回 到目前时间剩余的时间
+     * @param targetTimeMillis 目标时间
+     * @return 返回还剩的时间的毫秒数, 返回-1 表示目标时间已经过期
+     */
+    public static long getRemainMillis(long targetTimeMillis){
+        if (targetTimeMillis > System.currentTimeMillis())
+            return -1;
+        long remainTime = System.currentTimeMillis() - targetTimeMillis;
+
+        return remainTime;
+    }
 
     public String getStartTime() {
         return startTime;
@@ -157,5 +176,27 @@ public class TimeStruct  {
     public long getEndTimeMillis() {
         this.endTimeMillis = StringToCurrentMillis(this.endTime);
         return endTimeMillis;
+    }
+
+    /**
+     *  获取标识 requestCode，用于对PengdingIntent的设定识别,;
+     *  原理为 时分组合，如：12：13 则返回 1213 ;
+     *  以开始时间为基准;
+     * @return
+     */
+    public int getRequestCode() {
+        // 分割
+        String[] part = startTime.split(":");
+        int hourInt = Integer.parseInt(part[0])*100;
+        int minuteInt = Integer.parseInt(part[1]);
+
+        requestCode = hourInt + minuteInt;
+        return requestCode;
+    }
+
+
+    public long getDuringMillis() {
+        duringMillis = this.startTimeMillis - this.endTimeMillis;
+        return duringMillis;
     }
 }

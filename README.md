@@ -45,8 +45,13 @@ Software architecture description
 ```doc
 git pull origin master --allow-unrelated-histories
 ```
++ Broadcast 的生命周期是 当`onRecive()` 执行完毕后消除
 
-
+#### 提一下
++ list 的排序依据就是 requestCode （TimeStruct 的属性）
++ 添加/修改/删除 一个时间计划，简单粗暴方法，只需要改application中的list在启动AlarmService即可； 高级办法：对哪个改了，就找那个再修改/删除，重设定
++ 出现弹窗两个选择 “现在开始” “今日不再提醒” (不管选哪个 最后这个计划都是 Exected 状态,区别在于 是否可进入计时界面)
++ 计时界面在主界面右上角，点击后提示是否有正在执行的计划，有：进入计时界面；无：没啥反应
 #### Installation
 
 1.  xxxx

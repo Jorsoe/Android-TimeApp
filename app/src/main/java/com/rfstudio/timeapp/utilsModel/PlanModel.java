@@ -4,8 +4,13 @@ import android.graphics.Color;
 
 import com.rfstudio.timeapp.utils.TimeStruct;
 
-public class PlanModel {
-    private int id;
+import java.io.Serializable;
+
+/**
+ * planmodel  顺便序列化，可由intent传输
+ */
+public class PlanModel implements Serializable {
+    private Integer id;                     // 对应timestruct 的 requestCode （只读）
     private String doThing;
     private TimeStruct during;
 
@@ -23,13 +28,11 @@ public class PlanModel {
         this.isExecuted = true;
     }
 
-    public int getId() {
+    public Integer getId() {
+        this.id = during.getRequestCode();
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
 
     public TimeStruct getDuring() {
