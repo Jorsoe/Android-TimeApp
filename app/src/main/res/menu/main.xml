@@ -2,8 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_countdown"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="Filling"
+        android:icon="@drawable/ic_action_countdown"
+        app:showAsAction="ifRoom"
+        android:iconTint="@color/bootstrap_brand_danger"
+        android:iconTintMode="src_over"
+        />
 </menu>

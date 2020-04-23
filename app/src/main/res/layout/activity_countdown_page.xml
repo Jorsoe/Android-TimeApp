@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <com.dinuscxj.progressbar.CircleProgressBar
+        android:id="@+id/circle_progress"
+        android:layout_gravity="center"
+        app:style="line"
+        app:drawBackgroundOutsideProgress="true"
+        app:progress_stroke_width="1dp"
+        app:progress_stroke_cap="round"
+        app:progress_shader="sweep"
+        app:progress_background_color="@color/holo_darker_gray"
+        app:progress_start_color="@android:color/transparent"
+        app:progress_end_color="@android:color/transparent"
+        app:progress_text_color="@color/holo_blue_light"
+        app:progress_text_size="25sp"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        />
+
+<!--
+        <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+            android:id="@+id/btn_cpb_countdown_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:minWidth="200dp"
+            android:minHeight="100dp"
+
+            app:spinning_bar_width="4dp"
+            app:spinning_bar_color="@color/bootstrap_well_border_color"
+            app:spinning_bar_padding="6dp"
+
+            android:text="@string/dd_progress_btn_clickIdle"
+            />
+-->
+    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+        android:id="@+id/btn_cpb_countdown_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:minWidth="120dp"
+        android:minHeight="80dp"
+
+        app:spinning_bar_width="4dp"
+        app:spinning_bar_color="@color/bootstrap_well_border_color"
+        app:spinning_bar_padding="6dp"
+
+        app:initialCornerAngle="50dp"
+        app:finalCornerAngle="50dp"
+
+        android:text="@string/dd_progress_btn_clickIdle"
+        />
+
+</LinearLayout>

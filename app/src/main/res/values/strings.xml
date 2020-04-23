@@ -13,4 +13,23 @@
     <string name="menu_setting">设置</string>
     <string name="menu_about">关于</string>
     <string name="menu_send">Send</string>
+
+    <!--通用文本-->
+    <string name="btn_confirm">确认</string>
+    <string name="btn_cencel">取消</string>
+
+
+    <!--弹框内容-->
+    <string name="alertdialog_timeover_title">！时间到了！</string>
+    <string name="alertdialog_timeover_context">测试测试，是时候去进行 xxx 计划了</string>
+    <string name="alertdialog_timeover_tipcontext">（稍等：5分钟后再提醒）</string>
+    <string name="alertdialog_timeover_btn_ok">好的</string>
+    <string name="alertdialog_timeover_btn_cencel">稍等</string>
+
+    <!--dd按钮-->
+    <string name="dd_progress_btn_clickIdle">Click</string>
+    
+    <!--欢迎-->
+    <string name="splashpage_hello">Hello</string>
+
 </resources>
