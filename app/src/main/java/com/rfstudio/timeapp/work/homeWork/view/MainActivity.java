@@ -18,6 +18,7 @@ import com.github.clans.fab.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.rfstudio.timeapp.R;
 import com.rfstudio.timeapp.application.MyApplication;
+import com.rfstudio.timeapp.db.DatabaseFindUtil;
 import com.rfstudio.timeapp.utils.FileManager;
 import com.rfstudio.timeapp.utils.TimeStruct;
 import com.rfstudio.timeapp.utilsModel.ConfigInfoModel;
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
