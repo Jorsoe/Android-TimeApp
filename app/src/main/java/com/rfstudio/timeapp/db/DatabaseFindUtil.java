@@ -8,20 +8,23 @@ import com.rfstudio.timeapp.R;
 import com.rfstudio.timeapp.utils.TimeStruct;
 import com.rfstudio.timeapp.utilsModel.PlanModel;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class DatabaseFindUtil {
     Context context;
     ImportDatabaseUtil importDatabaseUtil;
+    //构造函数
     public DatabaseFindUtil(Context context) {
         this.context = context;
         importDatabaseUtil = new ImportDatabaseUtil(context);
     }
+    //检查listAll是否可用
     String guideSQL_1 = "INSERT INTO DailyPlanTable(planType,dothing,startTime,endTime) SELECT DothingType.type,Dothing.thing,startTime,endTime FROM Dothing,During,DothingType INNER JOIN ( SELECT during_id,dothing_id FROM During_Dothing WHERE dothing_id IN ( SELECT dothing_id FROM Dothing WHERE type_id ==";
     String guideSQL_2 = "AND id not in(1,2,3,6,7)) AND during_id in (";
     String guideSQL_3 = ") GROUP BY dothing_id ORDER BY percentage DESC LIMIT 5 ) AS b ON During.id = b.during_id AND Dothing.id = b.dothing_id WHERE DothingType.id ==";
-
-    String referralSQL = "";
+    String referralSQL = "SELECT DothingType.type,Dothing.thing,startTime,endTime FROM DothingType,Dothing,During INNER JOIN( SELECT during_id,dothing_id FROM During_Dothing ORDER BY percentage DESC) AS All_During_Dothing ON During.id = All_During_Dothing.during_id AND Dothing.id = All_During_Dothing.dothing_id";
 
     //引导页查询
     public ArrayList<PlanModel> guidePageQuery(int dothingTypeId , char[] during){
@@ -53,13 +56,22 @@ public class DatabaseFindUtil {
         return list;
     }
 
-    //推荐页查询
-    public ArrayList<PlanModel> referralPageQuery(){
+    //生成全部推荐内容
+    public ArrayList<PlanModel> referralPageQuery(int count){
         ArrayList<PlanModel> listAll = new ArrayList<>();
-        ArrayList<PlanModel> list = new ArrayList<>();
-        PlanModel planModel = new PlanModel();
         SQLiteDatabase sqLiteDatabase = importDatabaseUtil.getDatabase();
-
-        return null;
+        Cursor cursor = sqLiteDatabase.rawQuery(referralSQL,null);
+        while (cursor.moveToNext()){
+            PlanModel planModel = new PlanModel();
+            planModel.setDuring(new TimeStruct(cursor.getString(cursor.getColumnIndex("startTime")),cursor.getString(cursor.getColumnIndex("endTime"))));
+            planModel.setDoThing(cursor.getString(1));
+            listAll.add(planModel);
+        }
+        ArrayList<PlanModel> list = new ArrayList<>();
+        Random random = new Random();       //随机数获取对象
+        for (int i=0;i<count;i++){
+            list.add(listAll.get(random.nextInt(listAll.size())));
+        }
+        return list;
     }
 }

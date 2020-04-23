@@ -199,9 +199,4 @@ public class TimeStruct  {
         duringMillis = this.startTimeMillis - this.endTimeMillis;
         return duringMillis;
     }
-
-
-    public static int[] changeDuringToCodes(int startTimeHour,int endTimeHour){
-        
-    }
 }
